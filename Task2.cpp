@@ -55,14 +55,48 @@ public:
         return (num * other.den < other.num * den);
     }
 
-    void print() const {
-        cout << num << "/" << den;
+    Fraction& operator++() {
+        num = num + den;
+        simplify();
+        return *this;
     }
+
+    friend ostream& operator<<(ostream& out, const Fraction& f);
+    friend istream& operator>>(istream& in, Fraction& f);
 };
+
+ostream& operator<<(ostream& out, const Fraction& f) {
+    out << f.num << "/" << f.den;
+    return out;
+}
+
+istream& operator>>(istream& in, Fraction& f) {
+    in >> f.num >> f.den;
+    f.simplify();
+    return in;
+}
 
 int main() {
     Fraction a(1, 2), b(3, 4);
-    if (Fraction(2, 4) == a) cout << "2/4 is equal to 1/2" << endl;
-    if (a < b) cout << "1/2 is less than 3/4" << endl;
+
+    cout << a << " + " << b << " = " << (a + b) << endl;
+    cout << a << " - " << b << " = " << (a - b) << endl;
+    cout << a << " * " << b << " = " << (a * b) << endl;
+
+    if (Fraction(2, 4) == a) {
+        cout << "2/4 is equal to " << a << endl;
+    }
+    if (a < b) {
+        cout << a << " is less than " << b << endl;
+    }
+
+    ++a;
+    cout << "After ++a: " << a << endl;
+
+    Fraction userFrac;
+    cout << "Enter numerator and denominator: ";
+    cin >> userFrac;
+    cout << "You entered " << userFrac << endl;
+
     return 0;
 }
