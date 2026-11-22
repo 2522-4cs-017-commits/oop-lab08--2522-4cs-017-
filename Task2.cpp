@@ -47,6 +47,14 @@ public:
         return Fraction(num * other.num, den * other.den);
     }
 
+    bool operator==(const Fraction& other) const {
+        return (num == other.num && den == other.den);
+    }
+
+    bool operator<(const Fraction& other) const {
+        return (num * other.den < other.num * den);
+    }
+
     void print() const {
         cout << num << "/" << den;
     }
@@ -54,8 +62,7 @@ public:
 
 int main() {
     Fraction a(1, 2), b(3, 4);
-    (a + b).print(); cout << endl;
-    (a - b).print(); cout << endl;
-    (a * b).print(); cout << endl;
+    if (Fraction(2, 4) == a) cout << "2/4 is equal to 1/2" << endl;
+    if (a < b) cout << "1/2 is less than 3/4" << endl;
     return 0;
 }
